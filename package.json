@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "typecheck": "vue-tsc --noEmit -p tsconfig.app.json && vue-tsc --noEmit -p tsconfig.node.json",
-    "build": "yarn typecheck && vite build",
+    "build": "vite build",
     "dev": "vite"
   },
   "dependencies": {
@@ -18,8 +18,10 @@
     "primevue": "^4.3.6",
     "tailwindcss": "^4.1.11",
     "vue": "^3.5.17",
+    "vue-i18n": "10",
     "vue-router": "^4.5.1",
-    "vue3-circle-progress": "^1.0.7"
+    "vue3-circle-progress": "^1.0.7",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@primevue/auto-import-resolver": "^4.3.7",

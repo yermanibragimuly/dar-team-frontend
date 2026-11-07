@@ -5,21 +5,25 @@ import MainBlockNews from '../../newsPage/mainNews/MainBlockNews.vue';
 </script>
 
 <template>
-    <div class="flex flex-col h-full">
-        <div class="flex flex-col h-full">
-            <div class="h-24 flex items-center justify-center">
-                <h1 class="text-4xl">новости</h1>
-            </div>
-            <div class="flex-grow">
-                <MainBlockNews :newLimit="3"/>
-            </div>
-            <div class="flex justify-center mt-4">
-                <router-link to="/news" class="btn">
-                    ПОСМОТРЕТЬ ВСЕ
-                </router-link>
-            </div>
-        </div>
+  <div class="flex flex-col h-full w-full">
+
+    <div class="h-24 flex items-center justify-center">
+      <h1 class="text-4xl text-white uppercase">{{ $t('menu.news') }}</h1>
     </div>
+    <div class="flex-grow w-full">
+      <div class="max-w-7xl mx-auto px-6">
+        <MainBlockNews :newLimit="3" hide-pagination/>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4">
+      <router-link to="/news" class="btn">
+        <p class="uppercase">
+          {{ $t('button.viewAll') }}
+        </p>
+      </router-link>
+    </div>
+
+  </div>
 </template>
 
 <style scoped>

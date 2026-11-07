@@ -1,45 +1,54 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import { getPublicPartners, type Partner } from '@/services/partner-services'
 
-</script>
+const partners = ref<Partner[]>([])
 
-<script setup lang="ts">
-
+onMounted(async () => {
+  try {
+    partners.value = await getPublicPartners()
+  } catch {}
+})
 </script>
 
 <template>
   <div class="w-full flex flex-col">
+    <!-- Фоновое фото команды -->
     <div class="relative w-full h-[632px]">
       <img 
         src="/src/assets/img/Main_img3.webp" 
-        alt="картинка успех приходит к целеустремленным" 
+        alt="DAR TEAM" 
         class="w-full h-full object-cover"
-      />
-      <img 
-        src="/src/assets/img/Main_img6.svg" 
-        alt="текст успех приходит к целеустремленным" 
-        class="absolute inset-0 mx-auto my-auto max-w-full h-auto"
       />
     </div>
 
-    <div class="relative w-full bg-[#B00D15] min-h-[335px] flex flex-col justify-center items-center gap-8 text-white py-12">
-      <h2 class="text-4xl font-bold">НАШИ ПАРТНЕРЫ</h2>
+    <!-- Красный баннер с партнерами -->
+    <div class="relative w-full bg-[#B00D15] min-h-[335px] flex flex-col justify-center items-center gap-8 text-white py-12 px-6">
+      <h2 class="text-3xl sm:text-4xl font-extrabold uppercase tracking-wide">
+        {{ $t('lable.ourPartners') || 'НАШИ ПАРТНЕРЫ' }}
+      </h2>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
-        <img 
-          src="/src/assets/img/Main_img5.png" 
-          alt="Logo partners" 
-          class="max-w-[180px] mx-auto"
-        />
-        <img 
-          src="/src/assets/img/Main_img7.svg" 
-          alt="Logo partners" 
-          class="max-w-[180px] mx-auto"
-        />
-        <img 
-          src="/src/assets/img/Main_img4.png" 
-          alt="Logo partners" 
-          class="max-w-[180px] mx-auto"
-        />
+      <!-- Сетка логотипов из базы данных -->
+      <div class="flex flex-wrap items-center justify-center gap-10 md:gap-14 max-w-7xl mx-auto">
+        <a 
+          v-for="item in partners" 
+          :key="item.id"
+          :href="item.websiteUrl || '#'"
+          :target="item.websiteUrl ? '_blank' : '_self'"
+          class="flex items-center justify-center transition-transform hover:scale-110 duration-300"
+          :title="item.name"
+        >
+          <img 
+            :src="item.logoUrl" 
+            :alt="item.name" 
+            class="max-w-[170px] max-h-[70px] w-auto h-auto object-contain filter drop-shadow"
+          />
+        </a>
+
+        <!-- Fallback на случай пустой базы -->
+        <div v-if="partners.length === 0" class="text-white/80 text-sm font-medium">
+          Партнеры обновляются через панель управления
+        </div>
       </div>
     </div>
   </div>

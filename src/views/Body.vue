@@ -5,16 +5,12 @@ import useConfirm from '@/shared/ui/useConfirm.vue'
 </script>
 
 <template>
-  <Header/>
-  <div class="layout">
-    <router-view />
-    <useConfirm/>
+  <div class="app-layout">    
+    <Header/>
+    <main class="app-content">
+      <router-view />
+      <useConfirm/>
+    </main>
+    <Footer/>
   </div>
-  <Footer/>
 </template>
-
-<style scoped>
-.layout {
-  min-height: 100vh;
-}
-</style>

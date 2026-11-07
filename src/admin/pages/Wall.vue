@@ -1,10 +1,7 @@
 <template>
-  <div class="flex min-h-screen">
-    <aside class="w-64 bg-[#0f1a2b] text-white">
-      <SidebarMenu />
-    </aside>
-
-    <main class="flex-1">
+  <div class="min-h-screen bg-[#0e0e11] text-white">
+    <SidebarMenu />
+    <main class="pl-72 pt-16 min-h-screen p-8">
       <router-view />
     </main>
   </div>

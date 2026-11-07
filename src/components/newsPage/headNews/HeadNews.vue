@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <div class="w-full flex justify-center items-center py-8">
-    <p class="text-3xl md:text-4xl font-bold text-center">
-      НОВОСТИ
-    </p>
-  </div>
+    <div class="text-white py-12 px-4 sm:px-6 lg:px-12">
+      <h2 class="text-3xl font-extrabold mb-10 text-center tracking-wider uppercase">
+        {{ $t('menu.news') }}
+      </h2>
+    </div>
 </template>

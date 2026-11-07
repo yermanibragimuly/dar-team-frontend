@@ -27,10 +27,10 @@ const projeCtcard = ref<Project[]>([
 </script>
 
 <template>
-  <div class="w-full flex justify-center items-center py-8">
-    <p class="text-3xl md:text-4xl font-bold text-center">
+  <div class="text-white py-12 px-4 sm:px-6 lg:px-12">
+    <h2 class="text-3xl font-extrabold mb-10 text-center tracking-wider">
       НАШИ ПРОЕКТЫ
-    </p>
+    </h2>
   </div>
   <div class="container mx-auto main-h-screen px-4 py-8">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

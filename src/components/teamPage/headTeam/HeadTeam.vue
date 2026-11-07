@@ -4,10 +4,10 @@
 
 <template>
   <div class="flex flex-col w-full">
-    <div class="w-full flex justify-center items-center py-8">
-      <p class="text-3xl md:text-4xl font-bold text-center">
-        НАША КОМАНДА
-      </p>
+    <div class="text-white flex justify-center items-center py-12 px-4 sm:px-6 lg:px-12">
+      <h2 class="text-3xl font-extrabold uppercase mb-10 text-center tracking-wider">
+        {{ $t('lable.ourTeam') }}
+      </h2>
     </div>
     <div>
       <div class="mx-[20%]">
@@ -18,10 +18,10 @@
                 to="/teams/fighters" 
                 class="
                 text-white hover:text-gray-300 transition-colors 
-                  font-medium pb-2 cursor-pointer"
+                  font-medium pb-2 cursor-pointer uppercase"
                 active-class="text-blue-600 border-b-2 border-red-600"
               >
-                БОЙЦЫ
+                {{ $t('lable.fighters') }}
               </router-link>
             </li>
             <li>
@@ -29,21 +29,21 @@
                 to="/teams/coaches" 
                 class="
                 text-white hover:text-gray-300 transition-colors 
-                  font-medium pb-2 cursor-pointer"
+                  font-medium pb-2 cursor-pointer uppercase"
                 active-class="text-blue-600 border-b-2 border-red-600"
               >
-                ТРЕНЕРЫ
+                {{ $t('lable.coaches') }}
               </router-link>
             </li>
             <li>
               <router-link 
-                to="/teams/fan" 
+                to="/teams/video" 
                 class="
                 text-white hover:text-gray-300 transition-colors 
-                  font-medium pb-2 cursor-pointer"
+                  font-medium pb-2 cursor-pointer uppercase"
                 active-class="text-blue-600 border-b-2 border-red-600"
               >
-                ЛЮБИТЕЛЬСКАЯ ГРУППА
+                {{ $t('lable.video') }}
               </router-link>
             </li>
           </ul>

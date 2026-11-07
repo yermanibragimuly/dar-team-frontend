@@ -11,7 +11,3 @@ setGlobalToast(toast)
   <Body/>
   <Toast />
 </template>
-
-<style scoped>
-
-</style>

@@ -1,10 +1,10 @@
 <template>
   <div class="p-6 max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Расписание тренеров</h1>
+    <h1 class="text-3xl font-bold mb-6 text-white">Расписание тренеров</h1>
 
     <Button label="Добавить запись" icon="pi pi-plus" class="mb-4" @click="openNew" />
 
-    <DataTable :value="schedules" dataKey="id" responsiveLayout="scroll">
+    <DataTable :value="schedules" dataKey="id" responsiveLayout="scroll" class="schedule-table">
       <Column field="day" header="День" sortable />
       <Column field="time" header="Время" sortable />
       <Column field="activity" header="Активность" />
@@ -49,21 +49,21 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { getAllschedul, updateScheduleByDay } from '@/services/gtoup-services'
 import { showError, showSuccess } from '@/shared/lib/toastService'
 
-const schedules = ref([])
+const schedules = ref<any[]>([])
 const dialog = ref(false)
-const schedule = ref({
+const schedule = ref<any>({
   id: null,
   day: '',
   time: '',
   activity: '',
   coach: ''
 })
-const selectDay = ref()
+const selectDay = ref<string>('')
 
 const fetchSchedules = async () => {
   try {
@@ -87,8 +87,8 @@ const openNew = () => {
 
 const saveSchedule = async () => {
   try {
-    await updateScheduleByDay(selectDay.value,schedule.value)
-    showSuccess('Расписание успешно обновлен')
+    await updateScheduleByDay(selectDay.value, schedule.value)
+    showSuccess('Расписание успешно обновлено')
     await fetchSchedules()
     dialog.value = false
   } catch (err) {
@@ -96,7 +96,7 @@ const saveSchedule = async () => {
   }
 }
 
-const editSchedule = (data) => {
+const editSchedule = (data: any) => {
   selectDay.value = data.day
   schedule.value = data
   dialog.value = true

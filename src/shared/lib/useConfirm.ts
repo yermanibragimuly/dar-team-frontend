@@ -1,20 +1,27 @@
 import { ref } from 'vue'
 
-type ConfirmOptions = {
+export type ConfirmOptions = {
+  title?: string
+  header?: string // для обратной совместимости
   message: string
-  header?: string
+  confirmText?: string
+  cancelText?: string
 }
 
 const isVisible = ref(false)
+const confirmTitle = ref('Подтвердите действие')
 const confirmMessage = ref('')
-const confirmHeader = ref('Подтвердите действие')
+const confirmButtonText = ref('Подтвердить')
+const cancelButtonText = ref('Отмена')
 
 let resolver: (value: boolean) => void = () => {}
 
 export function useConfirmDialog() {
   const show = (options: ConfirmOptions): Promise<boolean> => {
-    confirmMessage.value = options.message
-    confirmHeader.value = options.header || 'Подтвердите действие'
+    confirmTitle.value = options.title || options.header || 'Подтвердите действие'
+    confirmMessage.value = options.message || ''
+    confirmButtonText.value = options.confirmText || 'Подтвердить'
+    cancelButtonText.value = options.cancelText || 'Отмена'
     isVisible.value = true
 
     return new Promise<boolean>((resolve) => {
@@ -34,8 +41,10 @@ export function useConfirmDialog() {
 
   return {
     isVisible,
+    confirmTitle,
     confirmMessage,
-    confirmHeader,
+    confirmButtonText,
+    cancelButtonText,
     show,
     confirm,
     cancel,

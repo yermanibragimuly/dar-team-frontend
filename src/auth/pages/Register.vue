@@ -8,8 +8,10 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e:'update:visibleRegisterDialog', v:boolean) : void
+  (e: 'auth'): void
+  (e: 'out'): void
 }>()
+const disableButton = ref<boolean>(false)
 
 // Поля формы
 const username = ref('')
@@ -56,12 +58,15 @@ const handleRegister = async () => {
   if (!validate()) return
 
   try {
+    disableButton.value = true
     const response = await registerUser(username.value, password.value, email.value)
 
     showSuccess(response)
-    goLogin(true)
-  } catch (err) {
-    showError(err)
+    emit('out')
+  } catch (err : any) {
+    showError(err?.response?.data.error)
+  }finally{
+    disableButton.value = false
   }
     username.value = ''
     email.value = ''
@@ -71,8 +76,8 @@ const handleRegister = async () => {
 
 
 // Переход на авторизацию
-const goLogin = (v: boolean) => {
-  emit('update:visibleRegisterDialog', v)
+const goLogin = () => {
+  emit('auth')
 }
 </script>
 
@@ -82,7 +87,22 @@ const goLogin = (v: boolean) => {
     modal
     :draggable="false"
     :closable="false"
-    :style="{ width: '25rem', borderRadius: '1rem' }"
+    :dismissableMask="true"
+    :style="{
+      width: '25rem',
+      background: '#18181B',
+      borderRadius: '18px',
+      boxShadow: '0 20px 60px rgba(0,0,0,.75)',
+      '--p-dialog-border-color': '#3f3f46'
+    }"
+    :pt="{
+      root: 
+      { 
+        class: 'bg-[#18181B] text-white rounded-2xl shadow-2xl overflow-hidden' 
+      },
+      header: { class: 'bg-[#18181B] text-white border-0 p-4' },
+      content: { class: 'bg-[#18181B] text-white pt-0 pb-4 px-4' }
+    }"
     class="register-dialog"
   >
     <!-- Заголовок с кнопкой "Назад" -->
@@ -90,18 +110,18 @@ const goLogin = (v: boolean) => {
       <div class="flex items-center justify-between w-full">
         <button
           class="flex items-center text-white transition cursor-pointer hover:text-red-500"
-          @click="goLogin(true)"
+          @click="goLogin()"
         >
           <i class="pi pi-arrow-left mr-2"></i>
         </button>
-        <h2 class="text-lg font-semibold text-white">Регистрация</h2>
+        <h2 class="text-lg font-semibold text-white">{{ $t('auth.registration') }}</h2>
         <span class="w-8"></span>
       </div>
     </template>
 
     <!-- Контент формы -->
     <div class="flex flex-col items-center justify-center gap-4 text-white mt-3 text-center">
-      <InputText v-model="username" placeholder="Имя пользователя" class="w-full" />
+      <InputText v-model="username" :placeholder="$t('auth.username')" class="w-full" />
       <span class="text-red-500 text-sm">{{ errors.username }}</span>
 
       <InputText v-model="email" placeholder="Email" class="w-full" />
@@ -110,7 +130,7 @@ const goLogin = (v: boolean) => {
       <!-- Новый стиль пароля -->
       <Password
         v-model="password"
-        placeholder="Пароль"
+        :placeholder="$t('auth.password')"
         toggleMask
         :feedback="true"
         inputClass="w-full"
@@ -121,7 +141,7 @@ const goLogin = (v: boolean) => {
 
       <Password
         v-model="confirmPassword"
-        placeholder="Подтвердите пароль"
+        :placeholder="$t('auth.confirmThePassword')"
         toggleMask
         :feedback="true"
         inputClass="w-full"
@@ -132,7 +152,7 @@ const goLogin = (v: boolean) => {
 
       <Button
       unstyled
-      label="Зарегистрироваться"
+      :label="$t('auth.register')"
       class="
         w-full
         bg-gradient-to-r from-red-600 to-red-700
@@ -140,6 +160,7 @@ const goLogin = (v: boolean) => {
         text-white font-semibold rounded-xl
         py-3 transition duration-300 shadow-lg
       "
+      :disabled="disableButton"
       @click="handleRegister"
       />
     </div>
@@ -177,5 +198,15 @@ const goLogin = (v: boolean) => {
   outline: none;
 }
 
+:deep(
+  .p-inputtext,
+  .p-password input
+) {
+  background-color: #09090B !important;
+  color: #E5E7EB !important;
+  border: 1px solid #3F3F46 !important;
+  border-radius: 0.75rem;
+  box-shadow: none !important;
+}
 
 </style>
